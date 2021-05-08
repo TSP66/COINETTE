@@ -12,7 +12,7 @@
 
 void install_depedencies(void){
     
-    cout << "Installing Depedencies: Brew, Python3, GMP, Fastecdsa\n";
+    printf("Installing Depedencies: Brew, Python3, GMP, Fastecdsa\n");
     
     system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"');
     system('brew install python3');
