@@ -19,3 +19,8 @@ void install_depedencies(void){
     system('brew install gmp');
     system('pip3 install fastecdsa');
 }
+
+int main(void){
+    install_depedencies();
+    return(0);
+}
