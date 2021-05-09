@@ -13,12 +13,33 @@ CONNECTION connection;
 connection.port = 8336;
 
 
+//*****************Dummy Varibles*****************//
+
 connection.ip = (char *) "127.0.0.1";
 
+std::string public_address = "20053020608649230331723442089943129241597707800309205888496491961204729412316";
+
+//************************************************//
+
+
+void server(connection con){
+    std::string address = con.READ();
+    con.SEND(public_address);
+}
+void clinet(connection con){
+    con.SEND(public_address);
+    std::string address = con.READ();
+}
 
 int main(void){
-    int i = connection.boot();
     
+    int i = connection.boot();
+    if(i){
+        server(connection);
+    }
+    else{
+        client(connection);
+    }
     return(0);
 }
 
