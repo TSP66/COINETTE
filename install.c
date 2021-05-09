@@ -18,35 +18,7 @@ int install_depedencies(void){
     printf(BBLK);
     printf(WHTB);
     
-    printf("Installing Depedencies: Brew, Python3, GMP, Fastecdsa");
-    
-    printf(reset);
-    printf("\n \n");
-
-    //Set
-    printf(BWHT);
-    printf(BLUB);
-    
-    printf("Installing Brew:");
-    
-    
-    int brew = system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"');
-    
-    if(brew != -1){
-        printf(reset);
-        printf("\n");
-        printf(REDB);
-        printf(BWHT);
-        printf("Error installing homebrew: Exiting");
-       // return -1;
-    }
-    else{
-        printf(reset);
-        printf("\n");
-        printf(GRNB);
-        printf(BWHT);
-        printf("Successfully installed homebrew");
-    }
+    printf("Installing Depedencies: Python3, GMP, Fastecdsa");
     
     printf(reset);
     printf("\n \n");
