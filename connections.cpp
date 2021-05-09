@@ -8,8 +8,19 @@
 #include <thread>
 #include "connections.hpp"
 
+CONNECTION connection;
 
-#define MAX_CONNECTIONS 10
+connection.port = 8336;
+
+
+connection.ip = (char *) "127.0.0.1";
+
+
+int main(void){
+    int i = connection.boot();
+    
+    return(0);
+}
 
 
 /*

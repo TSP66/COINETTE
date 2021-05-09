@@ -125,8 +125,8 @@ public:
     }
 
     void READ(void){
-            clear();
-            int valread;
+        clear();
+        int valread;
         while(check() == 0){
             valread = read(sock , Data, 1024);
         }
@@ -142,17 +142,18 @@ public:
      //printf("Data: ")
      int b = 0;
      sock = setup_as_client();
+        
      if(sock == -1){
-     setup_as_server();
-     b = 1;
+         setup_as_server();
+         b = 1;
     }
     return b;
     }
 
     void clear(void){
        for(int i = 0; i < 1024; i++){
-       Data[i]  = '\000' ;
-       buffer[i] = '\000' ;
+           Data[i]  = '\000' ;
+            buffer[i] = '\000' ;
     }
 
 
