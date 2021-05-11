@@ -12,7 +12,7 @@
 #include "terminal_color.h"
 
 
-int install_depedencies(void){
+void install_depedencies(void){
     
     //Set color to black with white background
     printf(BBLK);
@@ -27,9 +27,13 @@ int install_depedencies(void){
     printf(BWHT);
     printf(BLUB);
     
+    system("");
+    
     printf("Installing Python3:");
     
-    int python3 = system('brew install python3');
+    system("");
+    
+    int python3 = system("brew install python3");
     
     if(python3 != -1){
         printf(reset);
@@ -54,9 +58,13 @@ int install_depedencies(void){
     printf(BWHT);
     printf(BLUB);
     
+    system("");
+    
     printf("Installing GMP:");
     
-    int gmp = system('brew install gmp');
+    system("");
+    
+    int gmp = system("brew install gmp");
     
     if(gmp != -1){
         printf(reset);
@@ -81,9 +89,13 @@ int install_depedencies(void){
     printf(BWHT);
     printf(BLUB);
     
+    system("");
+    
     printf("Installing Fastecdsa:");
     
-    int fastecdsa = system('pip3 install fastecdsa');
+    system("");
+    
+    int fastecdsa = system("pip3 install fastecdsa");
     
     if(fastecdsa != -1){
         printf(reset);
