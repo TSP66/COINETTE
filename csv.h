@@ -20,7 +20,10 @@ class CSV{
 private:
     ofstream csv_write;
     ifstream csv_read;
+    string file_name;
 public:
+    
+    bool FILE_OPEN;
     
     int height;
     int length;
@@ -33,7 +36,6 @@ public:
         int returner[2];
         string Line;
         int max_x = 0;
-        
         while(getline(csv_read, Line))
             {
                 y++;
@@ -42,6 +44,7 @@ public:
                 }
                 
                 if(x>max_x) max_x = x;
+                
             }
         returner[0] = max_x;
         returner[1] = y;
@@ -50,37 +53,45 @@ public:
     }
     
     void OPEN(string name){
-        csv_write.open(name, ios_base::app);
         csv_read.open(name);
-        length = *get_shape();
-        height = *(get_shape()+1);
+        csv_write.open(name, ios_base::app);
+    
+        //length = *get_shape();
+        //height = *(get_shape()+1);
+        file_name = name;
     }
     
     
-    void add_row(string data){
-        csv_write << (data);
+    void ADD_ROW(string data){
+        csv_write << (data) << "\n";
     }
     
-    string get_row(int row){
+    string GET_ROW(string name, int row){
+        OPEN(name);
         string Line;
         int y = 0;
         while(getline(csv_read, Line))
             {
-                if(y == row) return(Line);
+                if(y == row){
+                    return(Line);
+                    y++;
+                    break;
+                }
                 y++;
             }
         if(y < row){
-            cout << "Error: 1, Invalid Row, Possible over flow \n";
+            cout << "Error: 1, ID: csv.h:get_row, Invalid Row, Possible over flow \n";
             return("-1");
         }
         else{
-            cout << "Error: 3, Crash: Unkown Reason \n";
+            cout << "Error: 3, ID: csv.h:get_row, Crash: Unkown Reason \n";
             return("-1");
         }
+        CLOSE();
     }
     
-    string get_data(int x, int y){
-        string row = get_row(y);
+    string GET_DATA(string name, int x, int y){
+        string row = GET_ROW(name, y);
         if(row == "-1"){
             return("-1");
         }
@@ -103,15 +114,15 @@ public:
             }
         }
         if(i < x){
-            cout << "Error: 2, Invalid Column, Possible over flow \n";
+            cout << "Error: 2, ID: csv.h:get_data, Invalid Column, Possible over flow \n";
             return("-1");
         }
         else{
-            cout << "Error: 3, Crash: Unkown Reason \n";
+            cout << "Error: 3, D: csv.h:get_data, Crash: Unkown Reason \n";
             return("-1");
         }
     }
-    void close(void){
+    void CLOSE(void){
         csv_write.close();
         csv_read.close();
     }
