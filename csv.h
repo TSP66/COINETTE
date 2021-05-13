@@ -20,8 +20,6 @@ class CSV{
 private:
     ofstream csv_write;
     ifstream csv_read;
-    streampos size;
-    char * memblock;
 public:
     
     int height;
@@ -35,6 +33,7 @@ public:
         int returner[2];
         string Line;
         int max_x = 0;
+        
         while(getline(csv_read, Line))
             {
                 y++;
