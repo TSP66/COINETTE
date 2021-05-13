@@ -8,41 +8,38 @@
 #ifndef csv_h
 #define csv_h
 
-#include <isostream>
+#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <cstring>
 #include <string>
 
+using namespace std;
+
 class CSV{
 private:
-    
-    std::ofstream csv;
-    
+    ofstream csv_write;
+    ifstream csv_read;
+    streampos size;
+    char * memblock;
 public:
     
-    int * get_shape(void);
-    
-    int height = 0;
-    int length = 0;
-    
-    void open(std::string name){
-        csv(name, std::ios_base::app);
-        length = *get_shape();
-        height = *(get_shape()+1);
-    }
+    int height;
+    int length;
     
     int * get_shape(void){
+        height = 0;
+        length = 0;
         int x = 0;
         int y = 0;
         int returner[2];
-        std::string line;
+        string Line;
         int max_x = 0;
-        while(std::getline(myFile, line))
+        while(getline(csv_read, Line))
             {
                 y++;
-                for(int i = 0; i < line.length(); i++){
-                    if(line[i]==',') x++;
+                for(int i = 0; i < Line.length(); i++){
+                    if(Line[i] == ',') x++;
                 }
                 
                 if(x>max_x) max_x = x;
@@ -53,36 +50,48 @@ public:
         return(returner);
     }
     
-    void add_row(std::string data){
-        csv.write(data);
+    void OPEN(string name){
+        csv_write.open(name, ios_base::app);
+        csv_read.open(name);
+        length = *get_shape();
+        height = *(get_shape()+1);
     }
     
-    std::string get_row(int row){
-        std::string line;
+    
+    void add_row(string data){
+        csv_write << (data);
+    }
+    
+    string get_row(int row){
+        string Line;
         int y = 0;
-        while(std::getline(myFile, line))
+        while(getline(csv_read, Line))
             {
-
-                if(y=row) return(line);
+                if(y == row) return(Line);
                 y++;
             }
         if(y < row){
             cout << "Error: 1, Invalid Row, Possible over flow \n";
             return("-1");
         }
+        else{
+            cout << "Error: 3, Crash: Unkown Reason \n";
+            return("-1");
+        }
     }
     
-    std::string get_data(int x, int y){
-        std::string row = get_row(y);
-        if(row = "-1"){
+    string get_data(int x, int y){
+        string row = get_row(y);
+        if(row == "-1"){
             return("-1");
         }
         int col = 0;
-        for(int i = 0; i < x; i++){
+        int i;
+        for(i = 0; i < x; i++){
             if(col == x){
-                std::string r;
+                string r;
                 while(1){
-                    r = r + row[i]
+                    r = r + row[i];
                     if(row[i] == ','){
                         break;
                     }
@@ -95,11 +104,19 @@ public:
             }
         }
         if(i < x){
-            cout << "Error: 1, Invalid Row, Possible over flow \n";
+            cout << "Error: 2, Invalid Column, Possible over flow \n";
+            return("-1");
+        }
+        else{
+            cout << "Error: 3, Crash: Unkown Reason \n";
             return("-1");
         }
     }
-}
+    void close(void){
+        csv_write.close();
+        csv_read.close();
+    }
+};
 
 
 #endif /* csv_h */
