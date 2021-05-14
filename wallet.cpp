@@ -8,6 +8,8 @@
 #include <string>
 #include <math.h>
 
+#include "csv.h"
+
 using namespace std;
 
 string public_key;

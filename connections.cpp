@@ -5,8 +5,10 @@
 //  Created by Tom Petty on 23/4/21.
 //
 
+
 #include "csv.h"
 #include "connections.hpp"
+#include "time.h"
 
 void server(CONNECTION con);
 void client(CONNECTION con);
@@ -42,6 +44,7 @@ int main(void){
 }
 
 void server(CONNECTION con){
+    
     std::string address = con.READ();
     std::string ip_as_string(con.ip_address);
     con.SEND(public_address);
@@ -50,8 +53,13 @@ void server(CONNECTION con){
     csv.ADD_ROW(append);
     csv.CLOSE();
     
+    while(1){
+        std::string data = con.READ();
+    }
+    
 }
 void client(CONNECTION con){
+    
     std::string ip_as_string(con.ip);
     con.SEND(public_address);
     std::string address = con.READ();
@@ -59,6 +67,14 @@ void client(CONNECTION con){
     std::string append = address + ',' + ip_as_string;
     csv.ADD_ROW(append);
     csv.CLOSE();
+    
+    while(1){
+        long long seconds = get_time_y2k_s();
+        
+        if(seconds % 3){ //Ask for new data every 3 seconds
+            
+        }
+    }
 }
 
 /*
