@@ -5,33 +5,31 @@
 //  Created by Tom Petty on 23/4/21.
 //
 
-#include <thread>
+#include "csv.h"
 #include "connections.hpp"
+
+void server(CONNECTION con);
+void client(CONNECTION con);
+
+CSV csv;
 
 CONNECTION connection;
 
-connection.port = 8336;
-
-
 //*****************Dummy Varibles*****************//
-
-connection.ip = (char *) "127.0.0.1";
 
 std::string public_address = "20053020608649230331723442089943129241597707800309205888496491961204729412316";
 
 //************************************************//
 
-
-void server(connection con){
-    std::string address = con.READ();
-    con.SEND(public_address);
-}
-void clinet(connection con){
-    con.SEND(public_address);
-    std::string address = con.READ();
-}
-
 int main(void){
+    
+    //*****************Dummy Varibles*****************//
+
+    connection.port = 8336;
+
+    connection.ip = (char *) "127.0.0.1";
+
+    //************************************************//
     
     int i = connection.boot();
     if(i){
@@ -43,6 +41,25 @@ int main(void){
     return(0);
 }
 
+void server(CONNECTION con){
+    std::string address = con.READ();
+    std::string ip_as_string(con.ip_address);
+    con.SEND(public_address);
+    csv.OPEN("connections.csv");
+    std::string append = address + ',' + ip_as_string;
+    csv.ADD_ROW(append);
+    csv.CLOSE();
+    
+}
+void client(CONNECTION con){
+    std::string ip_as_string(con.ip);
+    con.SEND(public_address);
+    std::string address = con.READ();
+    csv.OPEN("connections.csv");
+    std::string append = address + ',' + ip_as_string;
+    csv.ADD_ROW(append);
+    csv.CLOSE();
+}
 
 /*
 std::thread thread_objstd[4];

@@ -8,7 +8,7 @@
 #include <string.h>
 #include <arpa/inet.h>
 
-#define PORT 8080
+#define PORT 8336
 
 class CONNECTION{
 public:
@@ -85,13 +85,10 @@ public:
         
     }
 
-
-
     int setup_as_client(void)
     {
         int valread;
         struct sockaddr_in serv_addr;
-        //struct sockaddr_in serv_addr;
          
         if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
         {
@@ -102,7 +99,6 @@ public:
         serv_addr.sin_family = AF_INET;
         serv_addr.sin_port = htons(port);
         
-        // Convert IPv4 and IPv6 addresses from text to binary form
         if(inet_pton(AF_INET, ip, &serv_addr.sin_addr)<=0)
         {
             printf("\nInvalid address/ Address not supported \n");
@@ -111,7 +107,6 @@ public:
 
         if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
         {
-            //printf("\n Setting up as server \n");
             return -1;
         }
      
@@ -119,44 +114,43 @@ public:
 
     }
 
-    void SEND(const char * MESSAGE){
-            send(sock , MESSAGE , strlen(MESSAGE) , 0 );
+    void SEND(std::string MESSAGE){
+            int n = MESSAGE.length();
+            char char_array[n + 1];
+            strcpy(char_array, MESSAGE.c_str());
+            send(sock , char_array, n, 0);
 
     }
 
-    void READ(void){
+    std::string READ(void){
         clear();
         int valread;
         while(check() == 0){
             valread = read(sock , Data, 1024);
         }
-        //printf("Data: ");
-        //printf("%s", Data);
-
         output = Data;
-            
+        std::string x(Data);
+        return(x);
             
     }
 
     int boot(void){
-     //printf("Data: ")
-     int b = 0;
-     sock = setup_as_client();
+        int b = 0;
+        sock = setup_as_client();
+        if(sock == -1){
+            setup_as_server();
+            b = 1;
+            
+        }
+        return b;
         
-     if(sock == -1){
-         setup_as_server();
-         b = 1;
-    }
-    return b;
     }
 
     void clear(void){
        for(int i = 0; i < 1024; i++){
            Data[i]  = '\000' ;
             buffer[i] = '\000' ;
-    }
-
-
+       }
     }
 
     void Close(void){ close(sock); }
