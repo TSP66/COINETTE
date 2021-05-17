@@ -7,6 +7,7 @@
 
 #ifndef string_converter_h
 #define string_converter_h
+
 #include <iostream>
 
 std::string char_to_string(char * input){
