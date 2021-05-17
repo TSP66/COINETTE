@@ -9,6 +9,8 @@
 #include <math.h>
 
 #include "csv.h"
+#include "terminal_color.h"
+#include "string_converter.h"
 
 using namespace std;
 
@@ -45,8 +47,17 @@ int main(){
     
     getline(public_key_file, public_key);
     getline(private_key_file, private_key);
+    
+    bool time = true;
+    
     while(wallet){
-        cout << "Wallet console (type 'help' for commands and usage): ";
+        if(time){
+            cout << (char_to_string(BWHT)+fgLight_Blue+"Coinette Wallet console (type 'help' for commands and usage): "+reset);
+            time = false;
+        }
+        else{
+            cout << "Coinette Wallet console: ";
+        }
         string input;
         cin >> input;
         switch ((const long long) hash_f(input)) {
