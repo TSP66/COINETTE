@@ -21,5 +21,13 @@ std::string exec(const char* cmd) {
 }
 
 std::string get_colour(void){
+    std::string colour = exec("./background.sh");
+    return(colour);
+}
+
+int get_fill(void){
+    std::string string_colour = get_colour();
+    string_colour.erase(0, 3);
+    
     
 }

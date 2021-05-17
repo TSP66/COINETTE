@@ -65,51 +65,52 @@ int main(){
     while(wallet){
         format_time();
         if(time){
-            cout << (char_to_string(BWHT)+"\e[48;5;$038m"+"Coinette Wallet console (type 'help' for commands and usage):"+reset+" ");
+            cout << (char_to_string(BWHT)+"\e[48;5;$038m"+"Coinette Wallet console"+reset+" "+"(type 'help' for commands and usage):"+reset+" ");
             time = false;
         }
         else{
-            cout << "Coinette Wallet console: ";
+            cout << char_to_string(BWHT)+"\e[48;5;$038m"+"Coinette Wallet console:"+reset+" ";
         }
         string input;
         cin >> input;
+        cout << "\n";
         format_time();
         switch ((const long long) hash_f(input)) {
             case 8543://private-key
-                cout << "\nPrivate Key: " + private_key + "\n\n";
+                cout << "Private Key: " + private_key + "\n\n";
                 break;
                 
             case 8541://Private-key
-                cout << "\nPrivate Key: " + private_key + "\n\n";
+                cout << "Private Key: " + private_key + "\n\n";
                 break;
                 
             case 4007://address
-                cout << "\nAddress: " + public_key + "\n\n";
+                cout << "Address: " + public_key + "\n\n";
                 break;
                 
             case 4005://Address
-                cout << "\nAddress: " + public_key + "\n\n";
+                cout << "Address: " + public_key + "\n\n";
                 break;
                 
             case 2814: //help
-                cout << "\nCommands (Case sensitive):\n     Address: returns address\n     Private-key: returns private key\n     Help: lists this message\n\n\n";
+                cout << "Commands (Case sensitive):\n\n                     Address: returns address\n                     Private-key: returns private key\n                     Help: lists this message\n\n\n";
                 break;
             
             case 2812: //Help
-                cout << "\nCommands (Case sensitive):\n     Address: returns address\n     Private-key: returns private key\n     Help: lists this message\n\n\n";
+                cout << "Commands (Case sensitive):\n\n                     Address: returns address\n                     Private-key: returns private key\n                     Help: lists this message\n\n\n";
                 break;
                 
             case 6573: //quit
-                cout << "\nQuiting....";
+                cout << "Quiting....";
                 wallet = false;
                 
             case 6571: //Quit
-                cout << "\nQuiting....";
+                cout << "Quiting....";
                 wallet = false;
             
                 
             default:
-                cout << "\n Command: "+input+" not found, type for help for commands and usage\n\n";
+                cout << "Command: "+input+" not found, type for help for commands and usage\n\n";
                 break;
         }
         

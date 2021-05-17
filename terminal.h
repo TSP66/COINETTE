@@ -17,5 +17,9 @@
 
 std::string exec(const char* cmd);
 
+std::string get_colour(void);
+
+int get_fill(void);
+
 
 #endif /* terminal_h */
