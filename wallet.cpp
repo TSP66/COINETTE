@@ -19,6 +19,17 @@ string private_key;
 
 bool wallet = true;
 
+void format_time(void){ //Print Time function from https://stackoverflow.com/questions/5141960/get-the-current-time-in-c/5142028 user hexinpeter
+    time_t rawtime;
+    struct tm * timeinfo;
+
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+
+    printf("[%d-%d-%d %d:%d:%d]",timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+    cout << " ";
+}
+
 /*******************************HASH FUNCTION USED**************************************/
 const long long hash_f(string input){ //hash function used for switch case statment
     long long sum = 0;
@@ -51,8 +62,9 @@ int main(){
     bool time = true;
     
     while(wallet){
+        format_time();
         if(time){
-            cout << (char_to_string(BWHT)+fgLight_Blue+"Coinette Wallet console (type 'help' for commands and usage): "+reset);
+            cout << (char_to_string(BWHT)+"\e[48;5;$038m"+"Coinette Wallet console (type 'help' for commands and usage):"+reset+" ");
             time = false;
         }
         else{
@@ -60,6 +72,7 @@ int main(){
         }
         string input;
         cin >> input;
+        format_time();
         switch ((const long long) hash_f(input)) {
             case 8543://private-key
                 cout << "\nPrivate Key: " + private_key + "\n\n";
@@ -95,7 +108,7 @@ int main(){
             
                 
             default:
-                cout << "\n Command: "+input+" not found, type for help for commands and usage";
+                cout << "\n Command: "+input+" not found, type for help for commands and usage\n\n";
                 break;
         }
         
