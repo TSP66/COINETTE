@@ -19,6 +19,7 @@ string private_key;
 
 bool wallet = true;
 
+
 void format_time(void){ //Print Time function from https://stackoverflow.com/questions/5141960/get-the-current-time-in-c/5142028 user hexinpeter
     time_t rawtime;
     struct tm * timeinfo;

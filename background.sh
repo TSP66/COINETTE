@@ -22,4 +22,4 @@ read -r answer
 result=${answer#*;}
 stty $oldstty
 # Remove escape at the end.
-echo $result | sed 's/[^rgb:0-9a-f/]\+$//'
+echo $result | sed 's/[^0-9a-f/]\+$//'
