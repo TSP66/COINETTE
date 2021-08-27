@@ -1,6 +1,6 @@
 //
 //  time.h
-//  
+//
 //
 //  Created by Tom Petty on 14/5/21.
 //
@@ -8,7 +8,7 @@
 #ifndef time_h
 #define time_h
 
-#include <time>
+#include <time.h>
 
 long long get_time_y2k_s(void){
     time_t timer;
@@ -21,8 +21,8 @@ long long get_time_y2k_s(void){
     time(&timer);  /* get current time; same as: timer = time(NULL)  */
 
     seconds = difftime(timer,mktime(&y2k));
-    
-    return(seconds)
+
+    return(seconds);
 }
 
 #endif /* time_h */

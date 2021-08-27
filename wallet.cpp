@@ -11,6 +11,7 @@
 #include "csv.h"
 #include "terminal_color.h"
 #include "string_converter.h"
+#include "terminal.h"
 
 using namespace std;
 
@@ -18,6 +19,8 @@ string public_key;
 string private_key;
 
 bool wallet = true;
+
+std::string text_colour = "\e[0;30m"; //black
 
 
 void format_time(void){ //Print Time function from https://stackoverflow.com/questions/5141960/get-the-current-time-in-c/5142028 user hexinpeter
@@ -27,8 +30,12 @@ void format_time(void){ //Print Time function from https://stackoverflow.com/que
     time ( &rawtime );
     timeinfo = localtime ( &rawtime );
 
+
+    cout << text_colour;
     printf("[%d-%d-%d %d:%d:%d]",timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+    cout << reset;
     cout << " ";
+
 }
 
 /*******************************HASH FUNCTION USED**************************************/
@@ -38,7 +45,7 @@ const long long hash_f(string input){ //hash function used for switch case statm
         if(input[i] == ' '){
             sum = (sum + 1)%1000;
         }
-        
+
         else
         sum = ((int)(sum + (((long) input[i])%10)*pow(10,(i%10))))%10000;
     }
@@ -46,23 +53,31 @@ const long long hash_f(string input){ //hash function used for switch case statm
 }
 /***************************************************************************************************/
 int main(){
-    
+    int colour = get_fill_b();
+    if(colour == BLACK){
+        text_colour = "\e[0;37m"; //white
+    }
+    else{
+        text_colour = "\e[0;30m";//black
+    }
+
     if((access("public_key.txt", F_OK ) == 0) && (access("private_key.txt", F_OK ) == 0)) {
         // file exists
     }
     else {
         system("python3 ecc.py");
     }
-    
+
     ifstream public_key_file("public_key.txt");
     ifstream private_key_file("private_key.txt");
-    
+
     getline(public_key_file, public_key);
     getline(private_key_file, private_key);
-    
+
     bool time = true;
-    
+
     while(wallet){
+        cout << reset;
         format_time();
         if(time){
             cout << (char_to_string(BWHT)+"\e[48;5;$038m"+"Coinette Wallet console"+reset+" "+"(type 'help' for commands and usage):"+reset+" ");
@@ -79,48 +94,48 @@ int main(){
             case 8543://private-key
                 cout << "Private Key: " + private_key + "\n\n";
                 break;
-                
+
             case 8541://Private-key
                 cout << "Private Key: " + private_key + "\n\n";
                 break;
-                
+
             case 4007://address
                 cout << "Address: " + public_key + "\n\n";
                 break;
-                
+
             case 4005://Address
                 cout << "Address: " + public_key + "\n\n";
                 break;
-                
+
             case 2814: //help
-                cout << "Commands (Case sensitive):\n\n                     Address: returns address\n                     Private-key: returns private key\n                     Help: lists this message\n\n\n";
+                cout << "Commands (Case sensitive):\n\n                     Address: returns address\n                     Private-key: returns private key\n                     Quit: quits\n                     Help: lists this message\n\n\n";
                 break;
-            
+
             case 2812: //Help
-                cout << "Commands (Case sensitive):\n\n                     Address: returns address\n                     Private-key: returns private key\n                     Help: lists this message\n\n\n";
+                cout << "Commands (Case sensitive):\n\n                     Address: returns address\n                     Private-key: returns private key\n                     Quit: quits\n                      Help: lists this message\n\n\n";
                 break;
-                
+
             case 6573: //quit
                 cout << "Quiting....";
                 wallet = false;
-                
+
             case 6571: //Quit
                 cout << "Quiting....";
                 wallet = false;
-            
-                
+
+
             default:
                 cout << "Command: "+input+" not found, type for help for commands and usage\n\n";
                 break;
         }
-        
-        
+
+
     }
 
-    
-    
-    
-    
-    
+
+
+
+
+
     return(0);
 }

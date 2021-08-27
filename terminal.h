@@ -15,11 +15,14 @@
 #include <string>
 #include <array>
 
+#define BLACK 0
+#define WHITE 1
+
 std::string exec(const char* cmd);
 
 std::string get_colour(void);
 
-int get_fill(void);
+int get_fill_b(void);
 
 
 #endif /* terminal_h */

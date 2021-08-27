@@ -1,6 +1,6 @@
 //
 //  test_client.cpp
-//  
+//
 //
 //  Created by Tom Petty on 15/4/21.
 //
@@ -92,159 +92,155 @@ int main ()
     //Build header
     //time_t seconds;
     header = header + SEPERATOR;
-    
+
     header = header + VERSION;
-    
+
     header = header + SEPERATOR;
-    
+
     long long seconds = (long long) time(NULL);
-    
+
     std::string TIME = long_to_string(seconds);
-    
+
     header = header + "Time:";
-   
+
     header = header + TIME;
-    
+
     header = header + SEPERATOR;
-    
+
     header = header + "Block_Number:";
-    
+
     header = header + long_to_string((long long) block_number);
-    
+
     header = header + SEPERATOR;
-    
+
     header = header + "Difficulty:";
-    
+
     header = header + long_to_string((long long) difficulty);
-    
+
     header = header + SEPERATOR;
-    
+
     header = header + "Reward:";
-    
+
     header = header + long_to_string((long long) reward);
-    
+
     header = header + SEPERATOR;
-    
+
     header = header + "Split:";
-    
+
     header = header + double_to_string((long double) split);
-    
+
     header = header + SEPERATOR;
-    
+
     header = header + "Miner:";
-    
+
     header = header + miners_address;
-    
+
     header = header + SEPERATOR;
-    
+
     header = header + "Bid:";
-    
+
     header = header + long_to_string((long long) bid);
-    
+
     header = header + SEPERATOR;
-    
+
     header = header + "Bidder:";
-    
+
     header = header + bidders_address;
-    
+
     header = header + SEPERATOR;
-    
+
     header = header + "Bidder_Signature:";
-    
+
     header = header + bidders_signature;
-    
+
     header = header + SEPERATOR;
-    
+
     header = header + "Total_Shares:";
-    
+
     header = header + long_to_string((long long) total_shares);
-    
+
     header = header + SEPERATOR;
-    
+
     header = header + "Shares_holders:";
-    
+
     header = header + long_to_string((long long) share_holders);
-    
+
     header = header + SEPERATOR;
-    
+
     for(unsigned long long i = 0; i < share_holders; i++){
-        
+
         header = header + "Number:";
-        
+
         header = header + long_to_string((long long) i);
-        
+
         header = header + SEPERATOR;
-        
+
         header = header + "Address:";
-        
+
         header = header + sha256(long_to_string((long long) i));
-        
+
         header = header + SEPERATOR;
-        
+
         header = header + "Shares:";
-        
+
         header = header + long_to_string(i); //Dummy
-        
+
         header = header + SEPERATOR;
-        
+
         header = header + "Payout:";
-        
+
         header = header + double_to_string((double)( (double) i/ (double) total_shares)* (double) ( (double) bid + (double) reward* (double) (1-(double)split)));
-        
+
         header = header + SEPERATOR;
-        
-    }
-    
-    header = header + "Transactions:";
-    
-    header = header + SEPERATOR;
-    
-    for(int i = 0; i < transacations; i++){
-        
-        header = header + "Number:";
-        
-        header = header + long_to_string((long long) i);
-        
-        header = header + SEPERATOR;
-        
-        header = header + "Value:";
-        
-        header = header + double_to_string((double) 10000/ (double) ((double) i+1)); //Dummy
-        
-        header = header + SEPERATOR;
-        
-        header = header + "Recievers_Address:";
-        
-        header = header + recievers_address;
-        
-        header = header + SEPERATOR;
-        
-        header = header + "Senders_Address:";
-        
-        header = header + senders_address;
-        
-        header = header + SEPERATOR;
-        
-        
-        
-        
-        
-        
+
     }
 
-    
+    header = header + "Transactions:";
+
+    header = header + SEPERATOR;
+
+    for(int i = 0; i < transacations; i++){
+
+        header = header + "Number:";
+
+        header = header + long_to_string((long long) i);
+
+        header = header + SEPERATOR;
+
+        header = header + "Value:";
+
+        header = header + double_to_string((double) 10000/ (double) ((double) i+1)); //Dummy
+
+        header = header + SEPERATOR;
+
+        header = header + "Recievers_Address:";
+
+        header = header + recievers_address;
+
+        header = header + SEPERATOR;
+
+        header = header + "Senders_Address:";
+
+        header = header + senders_address;
+
+        header = header + SEPERATOR;
+
+
+    }
+
+
     std::cout << header;
     std::cout << "\n \n \n";
     std::cout << sha256(header);
-    
-    
-    
-    
-    
+
+
+
+
+
     //printf("%lld", seconds);
-    
-    
-    
+
+
+
     return(0);
 }
 int get_digits(int num){
@@ -274,11 +270,11 @@ std::string long_to_string(long long value){
 }
 
 std::string double_to_string(long double value){
-    
+
     std::string x = std::to_string(value);
     return(x);
-    
-    
+
+
 }
 /*char * int_to_char(int * INT, int length){
     char * CHAR;
