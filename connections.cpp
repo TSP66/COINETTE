@@ -9,6 +9,7 @@
 #include "csv.h"
 #include "connections.hpp"
 #include "time.h"
+#include "requests.h"
 
 void server(CONNECTION con);
 void client(CONNECTION con);
@@ -17,9 +18,11 @@ CSV csv;
 
 CONNECTION connection;
 
+std::string public_address;
+
 int main(void){
 
-    std::string public_address = get_pub_key();
+    public_address = get_pub_key();
 
     //*****************Dummy Varibles*****************//
 
@@ -51,6 +54,18 @@ void server(CONNECTION con){
 
     while(1){
         std::string data = con.READ();
+        if(data == GET_CONNECTIONS){
+
+          std::ifstream file_read;
+          std::string connections;
+          file_read.open("connections.txt");
+          while(getline(file_read, connections)){
+            con.SEND(connections);
+          }
+          con.SEND(CLOSING_SIGNAL);
+          file_read.close();
+
+        }
     }
 
 }
@@ -67,8 +82,21 @@ void client(CONNECTION con){
     while(1){
         long long seconds = get_time_y2k_s();
 
-        if(seconds % 3){ //Ask for new data every 3 seconds
+        if(seconds % 300){ //Ask for new data every 5 minutes
+            cout << "Attempting";
+            con.SEND(GET_CONNECTIONS);
+            csv.OPEN("connections.csv");
+            while(1){
+              std::string data = con.READ();
+              if(data == CLOSING_SIGNAL){
+                break;
+              }
+              else{
+                csv.ADD_ROW(data);
+              }
 
+            }
+            csv.CLOSE();
         }
     }
 }
